@@ -39,9 +39,9 @@ const Connections = () => {
     <div className="my-10 text-center ">
         <h1 className="font-bold text-2xl">Connections</h1>
         {connections.map((connection) =>{
-            const{firstName,lastName,age,gender,about,photoUrl}=connection;
+            const{_id,firstName,lastName,age,gender,about,photoUrl}=connection;
            return(
-            <div className="m-4 p-4 flex  bg-base-300 rounded-lg w-1/2 mx-auto">
+            <div key={_id} className="m-4 p-4 flex  bg-base-300 rounded-lg w-1/2 mx-auto">
                 <div>
                      <RealImage alt="photo" className=" w-20 h-20 rounded-full "src={photoUrl}/>
                 </div> 
