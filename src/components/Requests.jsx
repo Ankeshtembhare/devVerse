@@ -1,16 +1,35 @@
 import axios from "axios";
 import { BASE_URL } from "../utills/constants";
 import { useDispatch, useSelector } from "react-redux";
-import {addRequests} from "../utills/requestSlice";
-import { useEffect } from "react";
+import {addRequests,  removeRequest} from "../utills/requestSlice";
+import { useEffect} from "react";
 import RealImage from "./RealPhotoUrl";
 
  
 
 const Requests = () => {
   const dispatch = useDispatch();
-
   const request = useSelector((store)=>store.requests);
+
+  const reviewRequest = async(status,_id)=>{
+    try{
+      const res = await axios.post(
+        BASE_URL+"/request/review/"+ status+"/"+_id ,{},{
+          withCredentials:true,
+        }
+      );
+
+      dispatch(removeRequest(_id));
+      console.log(res);
+
+    }catch(err){
+
+      console.log(err.message);
+
+    }
+  };
+
+ 
 
   const fetchRequest = async()=>{
     try{
@@ -31,7 +50,7 @@ const Requests = () => {
     if(!request)return ;
 
     
-    if(request.length === 0) return <h1 className="text-2xl font-bold">No Request Found</h1>;
+    if(request.length === 0) return <h1 className="text-2xl font-bold text-center my-10">No Request Found</h1>;
    
   return (
     <div className="my-10 text-center ">
@@ -50,11 +69,14 @@ const Requests = () => {
                 </div>
 
                 <div className="">
-                  <button className="btn btn-primary mx-2">Reject</button>
-                  <button className="btn btn-secondary mx-2">Accept</button>
+                  <button className="btn btn-primary mx-2"
+                   onClick={()=> reviewRequest("rejected",request._id)}>
+                    Reject</button>
+                  <button className="btn btn-secondary mx-2" 
+                  onClick={()=> reviewRequest("accepted",request._id)}>
+                    Accept</button>  
                 </div>
                
-                
             </div>
            );
         })}
