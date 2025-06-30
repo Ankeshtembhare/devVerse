@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from "axios";
 import { BASE_URL } from "../utills/constants";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,7 +21,7 @@ const Requests = () => {
       );
 
       dispatch(removeRequest(_id));
-      console.log(res);
+      
 
     }catch(err){
 
